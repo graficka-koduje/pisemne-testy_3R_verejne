@@ -250,11 +250,12 @@ const cz=x=>String(Math.round(x*1000)/1000).replace('.',',');
 
 const BANKA = [
 /* ---------------- 1 PÍSMO A PAPÍR ---------------- */
-{id:"1-01", o:1, t:"napis", q:"Podívej se na obrázek. <b>Jak se tomu říká?</b>", r:[
-  [{svg:"druhy"}, "druhy písma", ["druh","font"]],
-  [{svg:"rezy"}, "řezy písma", ["rez"]],
-  [{svg:"velikost"}, "velikost (stupeň) písma", ["velik","stupn","stupen"]]],
-  n:["písmová rodina","klasifikační skupina"]},
+{id:"1-29", o:1, t:"napis", q:"Napiš ke každému pojmu <b>jeden příklad</b>.", vzorek:3, r:[
+  ["druh písma (název písma)","Times New Roman",["arial","times","calibri","garamond","helvet","verdan","georgia","futura","tahoma","bodoni","baskerv","frutiger","gill","univers","myriad","minion","cambria","segoe","roboto","open sans","courier","comic","palatino","century","franklin","bookman","didot","caslon","trebuchet","lato"]],
+  ["řez písma","kurzíva",["kurziv","tucn","bold","italik","polotucn","kapital","regular","obycejn","stojat"]],
+  ["jednotka velikosti písma","bod (point)",["bod","point","pica","pika"]],
+  ["klasifikační skupina","grotesk",["grotesk","antikv","serifov","egypt","kaligraf","psan","lomen","fraktur","renesan","barok","klasic"]]],
+  n:["milimetr","písmová rodina","řádkový proklad"]},
 {id:"1-02", o:1, t:"prirad", q:"Co pojem znamená? <b>Vyber.</b>", r:[
   ["velikost (stupeň) písma","udává výšku písma"],
   ["druh písma","písmo s vlastním názvem, např. Arial"],
@@ -295,12 +296,49 @@ const BANKA = [
   ["základní řez písma","regular – obyčejné stojaté písmo"],
   ["písmová rodina","jeden druh písma ve všech řezech a velikostech"]],
   n:["kurzíva – skloněné písmo pro zdůraznění","dělení písem podle kresebných znaků"]},
-{id:"1-11", o:1, t:"napis", q:"Pojmenuj, co vidíš na obrázku. <b>Napiš.</b>", vzorek:3, r:[
-  [{svg:"serif"}, "serif (patka)", ["serif","patk"]],
-  [{svg:"antikva"}, "antikva", ["antikv","s pat","patkov","serifov"]],
-  [{svg:"rodina"}, "písmová rodina", ["rodin"]],
-  [{svg:"grotesk"}, "grotesk", ["grotesk","bez pat","bezpat","bez serif","bezserif","sans"]]],
-  n:["řezy písma","kurzíva"]},
+{id:"1-27", o:1, t:"napis", q:"Co pojem znamená? <b>Napiš.</b>", vzorek:3, r:[
+  ["druh písma","písmo s vlastním názvem (např. Arial)",["nazev","nazv","jmen","arial","times","konkretni"]],
+  ["řez písma","obměna základního písma (tučné, kurzíva)",["tucn","kurziv","bold","italik","odvoz","obmen","zvyrazn","regular"]],
+  ["velikost (stupeň) písma","výška písma v bodech",["bod","vysk","point"]],
+  ["klasifikační skupina","dělení písem podle kresby",["kresb","rozdel","deli","11","jedenact"]],
+  ["písmová rodina","jeden druh písma ve všech řezech",["rez","vsech velik","vsechny velik"]],
+  ["osa stínování","zesílení tahů písma (dříků, oblouků)",["zesil","silnej","tlust","tloust","drik","oblouk","sikm","svisl"]],
+  ["serif","ukončení tahu písma (patka)",["ukonc","zakonc","konec","konci","patk","pata"]],
+  ["antikva","písmo s patkami (serify)",["s pat","patkov","serif","s pac"],["bez"]],
+  ["grotesk","písmo bez patek",["bez pat","bezpat","bez serif","bezserif","sans"]]]},
+{id:"1-28", o:1, t:"vyber", gen:r=>pick([
+  {q:"Vysvětli pojem <b>druh písma</b>.", o_:[
+    "Písmo charakteristické kresby s vlastním jménem od autora.",
+    "Soubor písem, do kterého patří patková i bezpatková písma, např. TTF.",
+    "Kresebná obměna písma, např. tučné písmo nebo kurzíva."]},
+  {q:"Vysvětli pojem <b>řez písma</b>.", o_:[
+    "Obměna základního písma (regularu), např. tučné, kurzíva.",
+    "Obměna základního písma (boldu), např. regular nebo italik.",
+    "Jiný název pro mezery mezi písmeny v textu – tedy kerning."]},
+  {q:"Vysvětli pojem <b>klasifikační skupina</b> písma.", o_:[
+    "Dělí písma podle kresby znaků. Skupin je jedenáct.",
+    "Jeden konkrétní druh písma ve všech řezech a velikostech.",
+    "Písma se stejnou kresbou, která mají společné řezy."]},
+  {q:"Vysvětli pojem <b>písmová rodina</b>.", o_:[
+    "Jeden druh písma ve všech řezech a velikostech.",
+    "Dělí písma podle kresby znaků. Skupin je jedenáct.",
+    "Všechna písma, která mají patky (serify), např. Times."]},
+  {q:"Vysvětli pojem <b>osa stínování</b>.", o_:[
+    "Úhel, pod kterým se mění tloušťka tahů písma.",
+    "Vzdálenost mezi znaky, když se použije stín.",
+    "Linie, na které stojí všechna písmena v řádku."]},
+  {q:"Vysvětli pojem <b>serif</b>.", o_:[
+    "Zakončení tahu písma – patka.",
+    "Zesílený svislý tah písmene – dřík.",
+    "Skloněný řez písma – kurzíva."]},
+  {q:"Vysvětli pojem <b>antikva</b>.", o_:[
+    "Staré latinkové písmo s patkami.",
+    "Tiskové písmo bez patek a bez stínování.",
+    "Písmo, které vypadá jako ruční psaní perem."]},
+  {q:"Vysvětli pojem <b>grotesk</b>.", o_:[
+    "Tiskové písmo bez patek a bez stínování.",
+    "Staré latinkové písmo s patkami (serify).",
+    "Písmo s lomenými tvary (fraktura)."]}],r)},
 {id:"1-12", o:1, t:"vyber", q:"<b>Osa stínování</b> je…", o_:[
   "zesílení kresby dříků a oblouků písmene","pomyslná čára, na které písmena stojí","šikmý sklon písmen u řezu kurzíva","mezera mezi dvěma řádky v sazbě"]},
 {id:"1-13", o:1, t:"vyber", q:"Co znamená pojem <b>písmová osnova</b>?", o_:[
