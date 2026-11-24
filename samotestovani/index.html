@@ -783,18 +783,27 @@ function numParse(v){if(v==null||v==='')return NaN;return parseFloat(String(v).r
 /* ---------- uložený postup ---------- */
 let S=(()=>{try{return JSON.parse(localStorage.getItem(KLIC))}catch(e){return null}})()||{};
 S.p=S.p||{}; S.n=S.n||0; S.rezim=S.rezim||'psat'; S.temata=S.temata||[1,2,3,4,5,6,7,8]; S.fs=S.fs||0;
+// S.h = otázky, které žák už umí (zodpověděl správně bez nápovědy) – zvlášť pro „Píšu“ a „Vybírám“
+if(!S.h){S.h={psat:{},vyber:{}};
+  // převod staršího postupu: co bylo naposledy „umím“, se počítá jako hotové v naposledy použitém režimu
+  Object.keys(S.p).forEach(id=>{if((S.p[id].b||0)>=1)S.h[S.rezim][id]=1})}
+S.h.psat=S.h.psat||{}; S.h.vyber=S.h.vyber||{};
 function ulozit(){try{localStorage.setItem(KLIC,JSON.stringify(S))}catch(e){}}
 
 const vidi=it=>it.jen?(it.jen===S.rezim):!(it.t==='vysvetli'&&S.rezim==='vyber');
 const polozkyTematu=o=>BANKA.filter(it=>it.o===o&&vidi(it));
-function umim(o){const L=polozkyTematu(o);if(!L.length)return 0;return Math.round(L.reduce((a,it)=>a+Math.min((S.p[it.id]||{}).b||0,4),0)/(4*L.length)*100)}
+const hotovo=it=>!!S.h[S.rezim][it.id];
+function umim(o){const L=polozkyTematu(o);if(!L.length)return 0;return Math.round(L.filter(hotovo).length/L.length*100)}
+const zbyva=()=>BANKA.filter(it=>vidi(it)&&S.temata.includes(it.o)&&!hotovo(it)).length;
+const znamka=pr=>pr>=87?1:pr>=73?2:pr>=59?3:pr>=45?4:5;   // stupnice JZZZ 2026 (v %)
 
 /* ---------- výběr otázek podle toho, jak je žák umí ---------- */
 function vaha(it){const p=S.p[it.id];if(!p)return 4;
   const w=[8,8,4,2,1,0.4][p.b]||1; const age=S.n-(p.last||0);
   return w*(age<4?0.1:1)*(1+Math.min(age,40)/10)}
 function sestavKolo(){
-  let pool=BANKA.filter(it=>vidi(it)&&S.temata.includes(it.o)); const out=[];
+  // co žák už umí, do kola nepřijde
+  let pool=BANKA.filter(it=>vidi(it)&&S.temata.includes(it.o)&&!hotovo(it)); const out=[];
   while(out.length<KOLO&&pool.length){const W=pool.map(vaha);let x=Math.random()*W.reduce((a,b)=>a+b,0);
     let i=0;for(;i<pool.length-1;i++){x-=W[i];if(x<=0)break}
     out.push({it:pool[i]});pool.splice(i,1)}
@@ -877,19 +886,32 @@ function domu(){
   <div class="card"><h2><span>Co už umím</span><span class="b">${celk} %</span></h2>`;
   for(let o=1;o<=8;o++){const u=umim(o),on=S.temata.includes(o);
     h+=`<label class="tema ${on?'on':''}"><input type="checkbox" ${on?'checked':''} onchange="tema(${o},this.checked)">
-      <span class="tn">${o}</span><span class="tt">${esc(TEMATA[o])}<span class="bar"><i style="width:${u}%;background:${u>=75?'var(--ok)':u>=40?'var(--warn)':'var(--acc)'}"></i></span></span><span class="tp">${u} %</span></label>`}
-  h+=`<p style="margin:10px 0 0"><button class="btn sec mini" onclick="vse(true)">Vybrat vše</button> <button class="btn sec mini" onclick="vse(false)">Zrušit výběr</button></p></div>
-  <button class="btn velky" onclick="zacit()" ${S.temata.length?'':'disabled'}>▶ Začít – ${KOLO} otázek</button>
-  <div class="ukol mal"><p>Co <b>umíš</b>, přijde <b>méně často</b>.</p><p>Co <b>neumíš</b>, přijde <b>znovu</b>.</p></div>
-  <p class="muted" style="font-size:.8em;margin-top:24px">Postup se ukládá jen v tomto prohlížeči. <a href="#" onclick="smazat();return false">Smazat můj postup</a></p>`;
+      <span class="tn">${o}</span><span class="tt">${esc(TEMATA[o])}${u===100?' <b style="color:var(--ok)">✔ hotovo</b>':''}<span class="bar"><i style="width:${u}%;background:${u>=75?'var(--ok)':u>=40?'var(--warn)':'var(--acc)'}"></i></span></span><span class="tp">${u} %</span></label>`;
+    if(u===100)h+=`<div style="text-align:right;margin:-4px 0 6px"><button class="btn sec mini" onclick="znovuTema(${o})">↺ Začít znovu</button></div>`}
+  const zb=zbyva();
+  h+=`<p style="margin:10px 0 0"><button class="btn sec mini" onclick="vse(true)">Vybrat vše</button> <button class="btn sec mini" onclick="vse(false)">Zrušit výběr</button></p></div>`;
+  if(S.temata.length&&!zb)h+=hotoveVse();
+  else h+=`<button class="btn velky" onclick="zacit()" ${S.temata.length?'':'disabled'}>▶ Začít – ${Math.min(KOLO,zb)||KOLO} otázek</button>`;
+  h+=`<div class="ukol mal"><p>Co <b>umíš</b>, už <b>nepřijde</b>.</p><p>Co <b>neumíš</b>, přijde <b>znovu</b>.</p></div>
+  <p style="margin-top:24px"><button class="btn sec mini" onclick="smazat()">🗑 Smazat všechno a začít od nuly</button></p>
+  <p class="muted" style="font-size:.8em">Postup se ukládá jen v tomto prohlížeči. „Píšu“ a „Vybírám“ mají postup zvlášť.</p>`;
   app.innerHTML=h; scrollTo(0,0);
 }
+function hotoveVse(){
+  return `<div class="verdikt ok">🎉 Všechno ve vybraných otázkách umíš!</div>
+  <div class="tl"><button class="btn velky" onclick="znovuVybrane()">↺ Začít znovu</button></div>
+  <p class="muted" style="text-align:center;font-size:.85em">Vymaže se postup u vybraných otázek. Po čase si to zopakuj.</p>`;
+}
+function vymazTema(o){polozkyTematu(o).forEach(it=>{delete S.h[S.rezim][it.id];if(S.p[it.id])S.p[it.id].b=0})}
+function znovuTema(o){if(confirm(`Opravdu smazat postup u ústní otázky ${o}? Začneš ji od začátku.`)){vymazTema(o);ulozit();domu()}}
+function znovuVybrane(){if(confirm('Opravdu smazat postup u vybraných otázek? Začneš je od začátku.')){S.temata.forEach(vymazTema);ulozit();domu()}}
 function rezim(r){S.rezim=r;ulozit();domu()}
 function tema(o,on){S.temata=S.temata.filter(x=>x!==o);if(on)S.temata.push(o);S.temata.sort();ulozit();domu()}
 function vse(on){S.temata=on?[1,2,3,4,5,6,7,8]:[];ulozit();domu()}
-function smazat(){if(confirm('Smazat celý tvůj postup? Začneš od nuly.')){S.p={};S.n=0;ulozit();domu()}}
+function smazat(){if(confirm('Opravdu smazat celý tvůj postup (Píšu i Vybírám)? Začneš od nuly.')){S.p={};S.n=0;S.h={psat:{},vyber:{}};ulozit();domu()}}
 
-function zacit(){KOLA={fronta:sestavKolo(),i:0,vysl:[]};if(!KOLA.fronta.length){alert('Vyber aspoň jednu ústní otázku.');return}otazka()}
+function zacit(){if(!S.temata.length){alert('Vyber aspoň jednu ústní otázku.');return}
+  KOLA={fronta:sestavKolo(),i:0,vysl:[]};if(!KOLA.fronta.length){domu();return}otazka()}
 
 function otazka(){
   const f=KOLA.fronta[KOLA.i]; Q=pripravit(f.it); Q.opak=!!f.opak;
@@ -1009,8 +1031,11 @@ function zkontrolovat(){
   if(fr===1)p.b=Q.hint?(p.b||0):Math.min(5,(p.b||0)+1);   // s nápovědou se „umím“ nezvyšuje
   else if(fr>=0.5)p.b=Math.max(0,(p.b||0)-1);
   else p.b=0;
-  p.n++; if(fr===1)p.ok++; p.last=S.n; S.p[id]=p; ulozit();
-  KOLA.vysl.push({it:Q.item,fr,hint:Q.hint,opak:Q.opak});
+  p.n++; if(fr===1)p.ok++; p.last=S.n; S.p[id]=p;
+  // správně napoprvé a bez nápovědy → umím, v dalších kolech už nepřijde
+  if(fr===1&&!Q.hint&&!Q.opak)S.h[S.rezim][id]=1;
+  ulozit();
+  KOLA.vysl.push({it:Q.item,fr,hint:Q.hint,opak:Q.opak,got:Q.hint?0:got,max});
   // špatně → otázka přijde v tomto kole ještě jednou (s jinak zamíchanými možnostmi)
   if(fr<1&&!Q.opak&&KOLA.fronta.length<KOLO+5)KOLA.fronta.push({it:Q.item,opak:true});
   const y=scrollY;kresli();scrollTo(0,y);
@@ -1023,9 +1048,16 @@ function konec(){
   const dobre=V.filter(x=>x.fr===1).length;
   let h=`<div class="card" style="text-align:center"><h1>Konec kola</h1>
     <p class="big">${dobre} / ${V.length}</p><p>otázek napoprvé <b>správně</b></p></div>`;
+  // odhad: kolik bodů by to bylo ve školním testu (jen první pokusy, nápověda = 0 b)
+  const g=V.reduce((a,x)=>a+(x.got||0),0), mx=V.reduce((a,x)=>a+(x.max||0),0);
+  if(mx){const pr=Math.round(g/mx*100), b20=Math.round(g/mx*20*2)/2, zn=znamka(pr);
+    h+=`<div class="card" style="text-align:center"><h2 style="justify-content:center"><span>🏫 Kdyby to byl test ve škole</span></h2>
+      <p class="big">${fmt(b20)} / 20 b</p><p>to je <b>${pr} %</b> → známka <b style="font-size:1.3em;color:${zn<=2?'var(--ok)':zn<=3?'var(--warn)':'var(--bad)'}">${zn}</b></p>
+      <p class="muted" style="font-size:.8em">Počítá se jen <b>první</b> pokus. S nápovědou = 0 b.${S.rezim==='vyber'?' Ve škole se často píše – to je těžší.':''}</p></div>`}
   if(V.length){h+=`<div class="card"><h2><span>Jak to šlo</span></h2><table class="tab">`+V.map(x=>`<tr><td>${x.fr===1?'<span class="znak ok">✔</span>':x.fr>=0.5?'<span class="znak pul">◐</span>':'<span class="znak bad">✘</span>'}</td><td>Ústní ${x.it.o}</td><td>${(x.it.q||x.it.t).replace(/<[^>]+>/g,'').slice(0,70)||'výpočet'}</td></tr>`).join('')+`</table></div>`}
   h+=`<div class="card"><h2><span>Co už umím</span></h2>`+S.temata.map(o=>{const u=umim(o);return `<div class="tema on"><span class="tn">${o}</span><span class="tt">${esc(TEMATA[o])}<span class="bar"><i style="width:${u}%;background:${u>=75?'var(--ok)':u>=40?'var(--warn)':'var(--acc)'}"></i></span></span><span class="tp">${u} %</span></div>`}).join('')+`</div>
-  <div class="tl"><button class="btn velky" onclick="zacit()">▶ Další kolo</button> <button class="btn sec" onclick="domu()">🏠 Domů</button></div>`;
+  ${zbyva()?`<div class="tl"><button class="btn velky" onclick="zacit()">▶ Další kolo</button> <button class="btn sec" onclick="domu()">🏠 Domů</button></div>`
+    :hotoveVse()+`<div class="tl"><button class="btn sec" onclick="domu()">🏠 Domů</button></div>`}`;
   KOLA=null; app.innerHTML=h; scrollTo(0,0);
 }
 
