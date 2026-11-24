@@ -324,7 +324,7 @@ const BANKA = [
     "Dělí písma podle kresby znaků. Skupin je jedenáct.",
     "Všechna písma, která mají patky (serify), např. Times."]},
   {q:"Vysvětli pojem <b>osa stínování</b>.", o_:[
-    "Úhel, pod kterým se mění tloušťka tahů písma.",
+    "Zesílená kresba dříků a oblouků písmene.",
     "Vzdálenost mezi znaky, když se použije stín.",
     "Linie, na které stojí všechna písmena v řádku."]},
   {q:"Vysvětli pojem <b>serif</b>.", o_:[
@@ -340,9 +340,9 @@ const BANKA = [
     "Staré latinkové písmo s patkami (serify).",
     "Písmo s lomenými tvary (fraktura)."]}],r)},
 {id:"1-12", o:1, t:"vyber", q:"<b>Osa stínování</b> je…", o_:[
-  "zesílení kresby dříků a oblouků písmene","pomyslná čára, na které písmena stojí","šikmý sklon písmen u řezu kurzíva","mezera mezi dvěma řádky v sazbě"]},
+  "zesílení kresby dříků a oblouků písmene","pomyslná čára, na které písmena v řádku stojí","šikmý sklon písmen u řezu kurzíva","mezera mezi dvěma řádky v sazbě"]},
 {id:"1-13", o:1, t:"vyber", q:"Co znamená pojem <b>písmová osnova</b>?", o_:[
-  "soustava vodorovných linií, které určují proporce písma","seznam všech řezů jednoho druhu písma","plocha strany, kterou zabírá text bez okrajů","pravidelná mřížka tiskových bodů na formě"]},
+  "soustava vodorovných linií, které určují proporce písma","seznam všech řezů a velikostí jednoho druhu písma","plocha strany bez okrajů, kterou na stránce zabírá text","pravidelná mřížka tiskových bodů na povrchu tiskové formy"]},
 {id:"1-14", o:1, t:"napis", q:"Jak se říká písmenům ve skupině A a ve skupině B? <b>Napiš.</b>", html:()=>svgPismena(), r:[
   ["Skupina A (abc)","mínusky",["minusk"]],["Skupina B (ABC)","verzálky",["verzal","majusk"]]], n:["kapitálky","kurzíva"]},
 {id:"1-15", o:1, t:"prirad", q:"Jak se jmenují čáry <b>písmové osnovy</b>?", html:()=>svgOsnova(), vzorek:4, r:[
@@ -353,9 +353,9 @@ const BANKA = [
   n:["1. a 3. písmeno","4. písmeno"]},
 {id:"1-17", o:1, t:"vyber", q:"Písmo v osnově má patky (serify). Do které <b>klasifikační skupiny</b> patří?", html:()=>svgOsnova(), o_:["antikva","grotesk","fraktura","kurzíva"]},
 {id:"1-18", o:1, t:"vyber", q:"Co najdeme v <b>předpisu sazby</b>?", o_:[
-  "údaje potřebné k úpravě textu na stránce","seznam chyb, které opravil korektor","pořadí stran na tiskovém archu","souhlas s tiskem podepsaný autorem"]},
+  "údaje potřebné k úpravě textu na stránce","seznam chyb, které v textu opravil korektor","pořadí stran na tiskovém archu pro montáž","souhlas s tiskem podepsaný autorem knihy"]},
 {id:"1-19", o:1, t:"prirad", q:"V jakých jednotkách se údaj v předpisu sazby píše?", vzorek:4, r:[
-  ["formát strany","v milimetrech"],["okraje (zrcadlo sazby)","v milimetrech"],["velikost písma","v typografických bodech"],["meziřádkový proklad","v typografických bodech"],["odstavcová zarážka","v čtverčících"]],
+  ["formát strany","v milimetrech"],["okraje (zrcadlo sazby)","v milimetrech"],["velikost písma","v typografických bodech"],["meziřádkový proklad","v typografických bodech"],["odstavcová zarážka","v milimetrech (1–3 čtverčíky)"]],
   n:["v pixelech","v gramech na m²"]},
 {id:"1-20", o:1, t:"prirad", q:"Jaká velikost se obvykle používá?", r:[
   ["písmo v knize pro dospělé","8–10 bodů"],["písmo v knize pro děti","12–20 bodů"],["meziřádkový proklad","120 % velikosti písma"],["odstavcová zarážka","1–3 čtverčíky"]],
@@ -388,7 +388,7 @@ const BANKA = [
 {id:"2-04", o:2, t:"prirad", q:"Jak se tiskne arch na obrázku?", html:()=>`<div class="imgs">${imgTag('obratka','Obrázek A')}${imgTag('klopeni','Obrázek B')}</div>`, r:[
   ["Obrázek A","montáž na obrátku"],["Obrázek B","montáž na klopení"]], n:["líc i rub zvlášť"]},
 {id:"2-05", o:2, t:"vyber", q:"Proč se vyplatí tisknout <b>líc i rub z jedné tiskové formy</b>?", o_:[
-  "ušetří se tiskové formy i seřízení stroje","ušetří se tisková barva i papír","vznikne přesnější soutisk všech barev","arch se po tisku nemusí ořezávat"]},
+  "ušetří se tiskové formy i seřízení stroje","ušetří se tisková barva i papír na každém archu","vznikne přesnější soutisk všech barev","arch se po tisku nemusí vůbec ořezávat"]},
 {id:"2-06", o:2, t:"anone", q:"Je to pravda?", r:[
   ["Při obrátce se arch otočí kolem svislé (kratší) osy.",true],["Při klopení jde arch do stroje stejnou nakládací hranou.",false],
   ["Při obrátce se tiskne líc i rub z jedné formy.",true]]},
@@ -430,10 +430,10 @@ const BANKA = [
   ["spadávka","přesah motivu přes okraj formátu kvůli ořezu"]],
   n:["údaje o zakázce na okraji archu","arch, který prochází tiskovým strojem"]},
 {id:"2-13", o:2, t:"vyber", q:"Jak spolu souvisí <b>tiskový arch (TA)</b> a <b>knihařský arch (KA)</b>?", o_:[
-  "jeden TA může obsahovat i více KA","jeden KA obsahuje vždy čtyři TA","TA i KA mají vždy stejný formát","KA se tiskne dřív než celý TA"]},
+  "jeden TA může obsahovat i více KA","jeden KA obsahuje vždy čtyři celé TA","TA i KA mají vždy stejný formát","KA se tiskne dřív než celý TA"]},
 {id:"2-14", o:2, t:"vyber", q:"O kolik obvykle přesahuje <b>spadávka</b> přes okraj formátu?", o_:["o 3–5 mm","o 10–15 mm","o 0,3–0,5 mm","o 20–25 mm"]},
 {id:"2-15", o:2, t:"vyber", q:"Na čem závisí, <b>kolik stran</b> se vejde na jeden tiskový arch?", o_:[
-  "na formátu tiskoviny a formátu tiskového archu","na nákladu tiskoviny a počtu tiskových barev","na plošné hmotnosti a směru vlákna papíru","na druhu tiskové barvy a rychlosti stroje"]},
+  "na formátu tiskového stroje a na formátu a knihařském zpracování publikace","na velikosti nákladu publikace a na počtu tiskových barev a laku v tiskovém stroji","na plošné hmotnosti a směru vlákna papíru","na druhu tiskové barvy a rychlosti stroje"]},
 {id:"2-16", o:2, t:"vyber", q:"Proč se tiskovina <b>lakuje</b>?", o_:[
   "kvůli vyšší odolnosti a brilanci barev","kvůli snazšímu skládání silného kartonu","kvůli vyseknutí tvaru razicí formou","kvůli snadnému odtržení části listu"]},
 {id:"2-17", o:2, t:"prirad", q:"Jaké je to lakování?", r:[
@@ -445,6 +445,11 @@ const BANKA = [
   ["kvůli ořezu",["orez","orizn","rez"]],
   ["nezůstane bílý proužek",["bil","prouz","nezustan"]]],
   vzor:"Spadávka = motiv <b>přesahuje</b> o 3–5 mm <b>přes okraj</b> formátu. Při <b>ořezu</b> pak nezůstane <b>bílý proužek</b>."},
+{id:"2-19", o:2, t:"grid", gen:r=>({pozn:`Časopis ve vazbě <b>V1</b> má <b>24 stran</b> a potřebuje <b>1,5 TA</b> (jeden a půl archu). Rozepiš TA a vyřaď je. (Stejná úloha je v písemce.)`,
+    cisla:[["Kolik stran je na 1/2 TA?",8,0.01,""]],
+    tab:{h0:"arch",cols:["od strany","do strany"],r:[["1/2 TA – 1. část",1,4],["1/2 TA – 2. část",21,24],["2. TA",5,20]]},
+    g:[["1/2 TA (líc i rub z jedné formy)",[[3,22,21,4],[2,23,24,1]]],["2. TA LÍC",[[9,16,13,12],[8,17,20,5]]]],
+    postup:`U <b>V1</b> se složky <b>vkládají do sebe</b>. Vnější složka (1/2 TA = 8 stran) má začátek a konec: <b>1–4 a 21–24</b>. Doprostřed patří 2. TA: <b>5–20</b>.<br>2. TA má stejné rozmístění jako 1. TA u V2 (1–16), jen ke každému číslu přičti <b>4</b>.<br>Kontrola: strany vedle sebe přes hřbet mají součet <b>25</b> (1 + 24, 5 + 20).`})},
 
 /* ---------------- 3 DTP STUDIO, KNIŽNÍ VAZBY ---------------- */
 {id:"3-01", o:3, t:"napis", q:"Co znamená zkratka <b>DTP</b>? <b>Napiš anglicky.</b>", r:[
@@ -461,7 +466,7 @@ const BANKA = [
   [{img:"sk_filmovy"},"filmový",["film"]],[{img:"sk_knizni"},"knižní",["kniz","knih"]]],
   n:["laserový"]},
 {id:"3-06", o:3, t:"vyber", q:"<b>Skener</b> je…", html:()=>`<div class="imgs">${imgTag('sk_plochy','')}</div>`, o_:[
-  "vstupní zařízení k digitalizaci analogových předloh","výstupní zařízení pro tisk náhledů a nátisků","program pro kontrolu tiskových dat v PDF","zařízení pro osvit tiskových desek laserem"]},
+  "vstupní zařízení k digitalizaci analogových předloh","výstupní zařízení pro tisk náhledů a nátisků na papír","program pro kontrolu tiskových dat v souboru PDF","zařízení pro osvit tiskových desek laserem"]},
 {id:"3-07", o:3, t:"dopln", q:"Jak pracuje <b>plochý skener</b>? Doplň.", text:"Předlohu položíme na {0} skeneru. Odražené světlo dopadá na řádkové {1} a mění se na {2}. V analogově-digitálním {3} se pak převede na číselný kód.",
   a:["desku","čidlo","elektrický signál","převodníku"], n:["válec","tiskovou formu","zvukový signál","rastru"]},
 {id:"3-08", o:3, t:"vyber", q:"Kdy je důležité nastavit <b>procento reprodukce</b>?", o_:["když předlohu zvětšujeme","když převádíme obraz do CMYK","když ukládáme data do PDF","když tiskneme nátisk"]},
@@ -515,13 +520,13 @@ const BANKA = [
    r:[["Hmotnost papíru =",kg,Math.max(0.06,kg*0.003),"kg"],["Cena papíru =",kc,Math.max(1,kc*0.004),"Kč"]],
    postup:`1 TA = 0,5 m × 0,707 m = 0,3535 m²<br>Všechny TA: ${n.toLocaleString('cs-CZ')} × 0,3535 = ${cz(n*0.3535)} m²<br>Hmotnost: ${cz(n*0.3535)} × ${g} g = ${cz(n*0.3535*g)} g = <b>${cz(kg)} kg</b><br>Cena: ${cz(kg)} × ${c} Kč = <b>${cz(Math.round(kc*100)/100)} Kč</b>`}}},
 {id:"4-10", o:4, t:"vyber", q:"Co znamená <b>digitální workflow</b>?", o_:[
-  "celý výrobní řetězec od digitalizace po hotovou tiskovinu","program pro úpravu fotografií a barevných předloh","kontrola chyb v PDF těsně před tiskem","ruční montáž filmů na montážní fólii"]},
+  "celý výrobní řetězec od digitalizace po hotovou tiskovinu","program pro úpravu fotografií a barevných předloh","kontrola chyb v PDF těsně před tiskem","ruční montáž filmů na průhlednou montážní fólii před kopírováním"]},
 {id:"4-11", o:4, t:"prirad", q:"Seřaď <b>kroky digitálního workflow</b>.", r:[
   ["1. krok","digitalizace textu a obrázků"],["2. krok","preflighting a oprava barev"],
   ["3. krok","archová montáž, RIP, osvit desek"],["4. krok","tisk a kontrola barev"]]},
 {id:"4-12", o:4, t:"napis", q:"Elektronický popis zakázky, který může hlídat celé workflow. <b>Napiš zkratku.</b>", r:[["Zkratka:","JDF",["jdf"]]], n:["PDF","RIP","DTP"]},
 {id:"4-13", o:4, t:"vyber", q:"Jak tiskárna nejčastěji dostává <b>podklady</b> od zákazníka?", o_:[
-  "digitálně na nosiči nebo přes FTP server","jen vytištěné na papíře poštou","jen jako filmy ke kopírování","jen ústně při schůzce se zákazníkem"]},
+  "digitálně na nosiči nebo přes FTP server","vytištěné na papíře a poslané poštou","jako filmy, které se kopírují na desku","ústně a písemně při schůzce se zákazníkem"]},
 {id:"4-14", o:4, t:"cisla", q:"Analogové (papírové) předlohy se skenují v rozlišení:", r:[["Rozlišení:",300,0.01,"dpi"]]},
 {id:"4-15", o:4, t:"anone", q:"Je to pravda?", r:[
   ["JPEG je formát obrazových dat.",true],["TIFF je formát obrazových dat.",true],["DOC je formát textových dat.",true],["DOC je formát obrazových dat.",false]]},
@@ -543,11 +548,11 @@ const BANKA = [
 {id:"5-06", o:5, t:"anone", q:"Dělá to <b>preflighting</b>?", r:[["hledá chybějící fonty",true],["kontroluje rozlišení obrázků",true],["ořezává hotové archy",false],["vypaluje tiskové desky",false]]},
 {id:"5-07", o:5, t:"napis", q:"Co znamená zkratka <b>RIP</b>? <b>Napiš anglicky.</b>", r:[["RIP =","Raster Image Processor",["raster+image+process"]]],
   n:["Raster Image Printer","Remote Image Processing","Raster Ink Plate"]},
-{id:"5-08", o:5, t:"dopln", q:"Co dělá <b>RIP</b>? Doplň.", text:"RIP provádí elektronické {0}. Nastavuje se v něm tvar bodu, úhel natočení a {1} sítě (lpi). Elektronický bod vzniká uvnitř {2}, která má obvykle 16 × 16 pixelů.",
+{id:"5-08", o:5, t:"dopln", q:"Co dělá <b>RIP</b>? Doplň.", text:"RIP provádí elektronické {0}. Nastavuje se v něm počet barevných separací, typ rastrování (AM, FM), {1} sítě (lpi) a tvar bodu. Elektronický bod vzniká uvnitř {2}, která má obvykle 16 × 16 pixelů.",
   a:["rastrování","hustota","tónové buňky"], n:["vektorizování","tloušťka","barevné škály"]},
 {id:"5-09", o:5, t:"prirad", q:"Kam tisková technika patří?", vzorek:5, r:[
   ["ofset","tisk z plochy"],["litografie","tisk z plochy"],["flexotisk","tisk z výšky"],["knihtisk","tisk z výšky"],
-  ["hlubotisk","tisk z hloubky"],["tamponový tisk","tisk z hloubky"],["sítotisk","průtisk"],["světlotisk","tisk z plochy"]]},
+  ["hlubotisk","tisk z hloubky"],["tamponový tisk","tisk z hloubky"],["sítotisk","průtisk (šablonový tisk)"],["světlotisk","tisk z plochy"]]},
 {id:"5-10", o:5, t:"cisla", gen:r=>{
   const F=pick([
     {f:"A5",w:148,h:210,c:4,rw:2},
@@ -569,7 +574,7 @@ const BANKA = [
   ["čelní nakládací hrana","okraj, který se nepotiskuje"]],
   n:["kontrola překrytí barev","místo, kde se arch přeloží"]},
 {id:"5-13", o:5, t:"vyber", q:"<b>Tiskový arch (TA)</b> je…", o_:[
-  "arch papíru, který prochází tiskovým strojem","arch oříznutý knihařem a složený do složky","jedna stránka hotové publikace po ořezu","fólie s montáží ke kopírování na desku"]},
+  "arch papíru, který prochází tiskovým strojem","arch oříznutý knihařem a složený do knižní složky","jedna stránka hotové publikace po ořezu","fólie s montáží ke kopírování na desku"]},
 {id:"5-14", o:5, t:"vysvetli", q:"Vysvětli, co je <b>preflighting</b>.", klice:[
   ["kontrola",["kontrol"]],
   ["tisková data / PDF",["pdf","dat"]],
@@ -590,34 +595,34 @@ const BANKA = [
 {id:"6-06", o:6, t:"anone", q:"Je to pravda?", r:[
   ["Jiný název pro FM rastr je stochastický rastr.",true],["U AM rastru může vzniknout moaré.",true],
   ["FM rastr tvoří pravidelnou síť.",false],["U AM rastru jsou body rozmístěné náhodně.",false]]},
-{id:"6-07", o:6, t:"prirad", q:"Jak se natáčí síť u <b>kruhového bodu</b>?", r:[["K (černá)","45°"],["Y (žlutá)","90° nebo 0°"],["C a M (azurová a purpurová)","75° a 15°"]], n:["30° a 60°"]},
+{id:"6-07", o:6, t:"prirad", q:"Jak se natáčí síť u <b>kruhového bodu</b>?", r:[["K (černá)","45°"],["Y (žlutá)","90°"],["C a M (azurová a purpurová)","75° a 15°"]], n:["30° a 60°","165° a 105°"]},
 {id:"6-08", o:6, t:"napis", q:"Co je na obrázku? <b>Napiš pojem.</b>", r:[
   [{img:"rozeta"},"rozeta",["rozet"]],[{img:"moare"},"moaré",["moar","moir"]]], n:["soutisk","spadávka"]},
 {id:"6-09", o:6, t:"napis", q:"Tisk <b>bez hmotné tiskové formy</b>, který se vyplatí už od 1 kusu. <b>Napiš, jak se jmenuje.</b>", r:[
   ["Druh tisku:","digitální tisk",["digitaln"],["digitaliz"]]], n:["digitalizovaný tisk","klasický tisk"]},
 {id:"6-10", o:6, t:"vyber", q:"Co platí o <b>digitalizovaném</b> tisku?", o_:[
-  "formy se vypalují laserem přímo ve věžích stroje","tiskne se úplně bez hmotné tiskové formy","forma se vyrobí mimo stroj a vloží se do něj","obraz se přenáší přes jemné tiskové síto"]},
+  "formy se vypalují laserem přímo ve věžích stroje","tiskne se úplně bez hmotné tiskové formy","forma se vyrobí mimo stroj a vloží se do věže stroje","obraz se přenáší přes jemné tiskové síto"]},
 {id:"6-11", o:6, t:"anone", q:"Platí to o <b>klasickém (analogovém)</b> tisku?", r:[
   ["hmotná forma se vyrobí mimo tiskový stroj",true],["seřízení stroje trvá déle než u digitalizovaného tisku",true],
   ["vyplatí se už od jednoho kusu",false],["forma se vypaluje přímo ve věži stroje",false]]},
 {id:"6-12", o:6, t:"prirad", q:"Jakou hustotu má síť?", r:[["hrubá síť","100–120 lpi"],["střední síť","150 lpi"],["jemná síť","175–200 lpi"]], n:["50–60 lpi"]},
 {id:"6-13", o:6, t:"prirad", q:"Jaká hustota sítě se používá u techniky?", vzorek:3, r:[["ofset","115–200 lpi"],["hlubotisk","150–250 lpi"],["flexotisk","120–140 lpi"],["sítotisk","90–120 lpi"]]},
 {id:"6-14", o:6, t:"cisla", gen:r=>{
-  const L=shuffle([60,80,100,120,150,175,200],r).slice(0,3).sort((a,b)=>a-b);
-  const d=x=>Math.min(2*x,300);
+  const L=shuffle([60,80,100,120,150],r).slice(0,2).concat([200]).sort((a,b)=>a-b);
+  const d=x=>x===200?300:2*x;
   return {pozn:`Vypočítej <b>dpi</b> pro lpi = ${L.join(', lpi = ')}.`,
    r:L.map(x=>[`lpi = ${x} → dpi =`,d(x),0.01,""]),
-   postup:`dpi = 2 × lpi, ale víc než 300 dpi není potřeba.<br>`+L.map(x=>`${x} × 2 = ${2*x}`+(2*x>300?' → stačí <b>300</b>':` → <b>${2*x}</b>`)).join('<br>')}}},
+   postup:`dpi = lpi × 2 (faktor kvality). Jen u 200 lpi (velká data) se násobí 1,5.<br>`+L.map(x=>x===200?`200 × 1,5 = <b>300</b>`:`${x} × 2 = <b>${2*x}</b>`).join('<br>')}}},
 {id:"6-15", o:6, t:"prirad", q:"Seřaď <b>kroky laserového tisku</b>.", r:[
   ["1. krok","nabití fotovodivého válce"],["2. krok","osvit válce laserem"],["3. krok","nanesení práškového toneru"],["4. krok","přenos na papír a fixace"]]},
 {id:"6-16", o:6, t:"vyber", q:"Čím se <b>toner</b> na papíře zafixuje?", o_:["teplem a tlakem","UV zářením","odpařením vody","vsáknutím do papíru"]},
 {id:"6-17", o:6, t:"vyber", q:"<b>Tonery</b> jsou…", o_:[
-  "barvy pro digitální tisk fixované tlakem a teplem","barvy pro ofset, které schnou oxidací na vzduchu","řídké barvy pro flexotisk nanášené aniloxem","laky pro zušlechtění povrchu tiskoviny"]},
+  "barvy pro digitální tisk fixované tlakem a teplem","barvy pro ofset, které pomalu schnou oxidací na vzduchu","řídké barvy pro flexotisk nanášené aniloxem","laky pro zušlechtění povrchu tiskoviny"]},
 {id:"6-18", o:6, t:"anone", q:"Existuje takový <b>toner</b>?", r:[["práškový",true],["kapalný",true],["plynný",false],["kovový",false]]},
 {id:"6-19", o:6, t:"vyber", q:"<b>Inkousty</b> jsou…", o_:[
-  "tekuté nebo tavné tuhé barvy pro digitální tisk","práškové barvy fixované teplem a tlakem","pastózní barvy pro archový ofsetový tisk","řídké barvy nanášené aniloxovým válcem"]},
+  "tekuté nebo tavné tuhé barvy pro digitální tisk","práškové barvy fixované na papír teplem a tlakem","pastózní barvy pro archový ofsetový tisk","řídké barvy nanášené aniloxovým válcem"]},
 {id:"6-20", o:6, t:"vyber", q:"Jak <b>inkoust</b> na materiálu drží a zasychá?", o_:[
-  "vsákne se, odpaří se nebo ztuhne (UV, chlad)","zafixuje se teplem a tlakem fixačních válců","zaschne oxidací pojiva na vzduchu přes noc","přitáhne se nábojem a zapeče se v peci"]},
+  "vsákne se, odpaří se nebo ztuhne (UV, chlad)","zafixuje se teplem a tlakem dvou fixačních válců","zaschne oxidací pojiva na vzduchu přes noc","přitáhne se nábojem a zapeče se v peci"]},
 {id:"6-21", o:6, t:"napisN", q:"Co dává inkoustu <b>barvu</b> (barvotvorná složka)? <b>Napiš 2 pojmy.</b>", pocet:2, s:[
   ["pigmenty",["pigment"]],["barviva",["barviv"]]], n:["pojiva","rozpouštědla","plniva"]},
 {id:"6-22", o:6, t:"vysvetli", q:"Vysvětli rozdíl mezi <b>AM</b> a <b>FM</b> rastrem.", klice:[
@@ -653,19 +658,19 @@ const BANKA = [
 {id:"7-08", o:7, t:"anone", q:"Používá se tady <b>bigování</b>?", r:[
   ["krabičky",true],["obálky měkkých vazeb",true],["novinový papír",false],["etikety na lahve",false]]},
 {id:"7-09", o:7, t:"vyber", q:"<b>Zušlechťování tiskovin</b> je…", o_:[
-  "úprava povrchu pro lepší vzhled a odolnost","oprava chyb v textu před tiskem","výroba tiskové formy pomocí laseru","rozřezání tiskového archu na listy"]},
+  "úprava povrchu pro lepší vzhled a odolnost","oprava chyb v textu ještě před tiskem","výroba tiskové formy pomocí laseru","rozřezání tiskového archu na menší listy papíru"]},
 {id:"7-10", o:7, t:"vyber", q:"Jak funguje <b>laminace</b>?", o_:[
-  "na výtisk se přilepí tenká průhledná fólie","lak se nanese jen na vybraná místa","do kartonu se vytlačí rýha pro skládání","do kartonu se vyrazí reliéf"]},
+  "na výtisk se přilepí tenká průhledná fólie","lak se nanese jen na vybraná místa tiskoviny","do kartonu se vytlačí rýha pro snadné skládání","do kartonu se vyrazí reliéf"]},
 {id:"7-11", o:7, t:"prirad", q:"Jaké <b>lepidlo</b> se používá při laminaci?", r:[
   ["laminace za tepla","tavná lepidla"],["mokrá laminace","vodou ředitelná disperzní lepidla"],["suchá laminace","lepidla aktivovaná tlakem"],["UV laminace","lepidla aktivovaná UV zářením"]]},
 {id:"7-12", o:7, t:"napis", q:"Papír se proděruje, aby šel snadno odtrhnout. <b>Napiš, jak se tomu říká.</b>", r:[["Pojem:","perforace",["perfor"]]], n:["bigování","výsek"]},
 {id:"7-13", o:7, t:"anone", q:"Platí to o <b>perforaci</b>?", r:[["Najdeme ji u kalendářů se spirálou.",true],["Zvýší lesk a brilanci barev.",false]]},
 {id:"7-14", o:7, t:"vyber", q:"Čím se tvar <b>vysekává</b>?", o_:["razicí formou s noži","laserem v tiskovém stroji","nůžkami na lepenku","rotačním perforátorem"]},
 {id:"7-15", o:7, t:"anone", q:"Vyrábí se to <b>výsekem</b>?", r:[["krabičky",true],["etikety",true],["samolepky",true],["noviny",false]]},
-{id:"7-16", o:7, t:"vyber", q:"K čemu je <b>snášení</b>?", o_:["k sestavení listů nebo složek do kompletu","k přeložení archu na souběžné lomy","k nanesení lepidla na hřbet bloku","k ořezu knižního bloku ze tří stran"]},
+{id:"7-16", o:7, t:"vyber", q:"K čemu je <b>snášení</b>?", o_:["k sestavení listů nebo složek do kompletu","k přeložení tiskového archu na souběžné lomy","k nanesení lepidla na hřbet bloku","k ořezu knižního bloku ze tří stran"]},
 {id:"7-17", o:7, t:"prirad", q:"Jak se složky snášejí?", r:[["Složky se řadí jedna za druhou.","na sebe (za sebou)"],["Složky se rozevřou a vkládají do sebe.","vkládáním (na stříšku)"]], n:["na obrátku"]},
-{id:"7-18", o:7, t:"anone", q:"Je to typ <b>snášecího stroje</b>?", r:[["listový",true],["složkový",true],["kapsový",false],["nožový",false]]},
-{id:"7-19", o:7, t:"vyber", q:"Co dělá <b>skládací stroj</b>?", o_:["skládá archy na souběžné nebo křížové lomy","snáší složky do sebe a sešívá je","ořezává knižní blok ze tří stran","nanáší fólii na povrch obálky"]},
+{id:"7-18", o:7, t:"anone", q:"Je to typ <b>snášecího stroje</b>?", r:[["listový",true],["složkový",true],["řezací",false],["razicí",false]]},
+{id:"7-19", o:7, t:"vyber", q:"Co dělá <b>skládací stroj</b>?", o_:["skládá archy na souběžné nebo křížové lomy","snáší složky do sebe a sešívá je drátěnými skobkami","ořezává knižní blok ze tří stran","nanáší fólii na povrch obálky"]},
 {id:"7-20", o:7, t:"vysvetli", q:"Vysvětli, co je <b>bigování</b> a kde se používá.", klice:[
   ["rýha (drážka)",["ryh","draz","vytlac"]],
   ["kvůli skládání bez praskání",["sklad","ohyb","lom","prask"]],
@@ -682,9 +687,9 @@ const BANKA = [
 {id:"8-04", o:8, t:"vyber", q:"Jak vznikají barvy v modelu <b>RGB</b>?", o_:[
   "přičítáním světla červené, zelené a modré","odečítáním azurové, purpurové a žluté","překrýváním rastrových bodů barvy na papíře","mícháním pigmentů v tiskové barvě"]},
 {id:"8-05", o:8, t:"vyber", q:"Na čem stojí <b>čtyřbarvotisk</b>?", o_:[
-  "na překrývání různých procent barev CMYK","na tisku čtyř přímých barev ze vzorníku","na čtyřikrát opakovaném tisku černou","na tisku RGB obrazu na čtyři papíry"]},
+  "na překrývání různých procent barev CMYK","na tisku čtyř přímých barev ze vzorníku Pantone","na čtyřikrát opakovaném tisku černou","na tisku RGB obrazu na čtyři papíry"]},
 {id:"8-06", o:8, t:"vyber", q:"Proč se k CMY přidává <b>černá K</b>?", o_:[
-  "CMY dohromady dají jen špinavě hnědou, ne čistou černou","bez černé by nešlo tisknout na bílý křídový papír","černá urychluje zasychání ostatních tiskových barev","černá rozšíří gamut o zářivé barvy monitoru"]},
+  "CMY dohromady dají jen špinavě hnědou, ne čistou černou","bez černé by nešlo tisknout na bílý křídový papír","černá barva urychluje zasychání ostatních tiskových barev","černá barva rozšíří gamut o zářivé a pestré barvy monitoru"]},
 {id:"8-07", o:8, t:"doplnV", q:"Doplň text. U každé mezery vyber <b>jednu</b> možnost.", html:()=>svgVyska(),
   text:"Tisk z výšky je reliéfní tisk. Tisknoucí místa {0}. Tisková forma je zrcadlově obrácená a pod tlakem se otiskne přímo na papír – je to {1} tisk.", o_:[
   ["jsou vyvýšená nad netisknoucími místy","jsou zahloubená pod netisknoucí místa","jsou ve stejné rovině s netisknoucími"],
@@ -710,8 +715,8 @@ const BANKA = [
   n:["gumový válec","vlhčicí válec"]},
 {id:"8-19", o:8, t:"napis", q:"Válec č. 3 nanáší barvu na tiskovou formu. <b>Napiš, jak se jmenuje.</b>", html:()=>svgFlexo(), r:[["Válec č. 3:","aniloxový (rastrový) válec",["anilox","rastrov"]]], n:["duktor","tlakový válec"]},
 {id:"8-20", o:8, t:"vyber", q:"Z čeho je <b>válec č. 3</b>?", html:()=>svgFlexo(), o_:["z keramiky","z pryže","z fotopolymeru","z hliníku"]},
-{id:"8-21", o:8, t:"vyber", q:"Jakou tiskovou formu nese <b>válec č. 4</b>?", html:()=>svgFlexo(), o_:["pružné fotopolymerové desky","hliníkové ofsetové desky","měděný povrch s jamkami","síto napnuté v rámu"]},
-{id:"8-22", o:8, t:"vyber", q:"Jaká je <b>flexotisková barva</b>?", o_:["řídká a rychle zasychá","hustá a pastózní","tuhá a taví se teplem","prášková a fixuje se"]},
+{id:"8-21", o:8, t:"vyber", q:"Jakou tiskovou formu nese <b>válec č. 4</b>?", html:()=>svgFlexo(), o_:["pružné fotopolymerové desky","hliníkové ofsetové desky s vrstvou","měděný povrch s jamkami","síto napnuté v rámu"]},
+{id:"8-22", o:8, t:"vyber", q:"Jaká je <b>flexotisková barva</b>?", o_:["řídká a rychle zasychá","hustá, pastózní a lepivá","tuhá a taví se teplem","prášková a fixuje se"]},
 {id:"8-23", o:8, t:"vyber", q:"Kam patří <b>flexotisk</b>?", o_:["přímý tisk z výšky","nepřímý tisk z plochy","přímý tisk z hloubky","průtisk přes síto"]},
 {id:"8-24", o:8, t:"vyber", q:"Na co se <b>flexotisk</b> dnes používá nejvíc?", o_:["na tisk obalů","na tisk knih","na tisk bankovek","na tisk vizitek"]},
 {id:"8-25", o:8, t:"doplnV", q:"<b>Knihtisk.</b> U každé mezery vyber <b>jednu</b> možnost.",
